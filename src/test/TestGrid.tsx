@@ -116,8 +116,14 @@ export const TestGrid: React.FC<TestGridProps> = (props) => {
     // eslint-disable-next-line
     rows[0].cells.find((cell) => cell.type === "text" && cell.text);
 
+    const [cellChangesIndex, setCellChangesIndex] = React.useState(() => -1);
+
+    const [cellChanges, setCellChanges] = React.useState(() => new Array());
+
     const handleChanges = (changes: CellChange<TestGridCells>[]) => {
         setRows((prevRows) => {
+            setCellChanges([...cellChanges.slice(0, cellChangesIndex + 1), changes]);
+            setCellChangesIndex(cellChangesIndex + 1);
             changes.forEach((change) => {
                 const changeRowIdx = prevRows.findIndex(
                     (el) => el.rowId === change.rowId
@@ -138,6 +144,44 @@ export const TestGrid: React.FC<TestGridProps> = (props) => {
             });
             return [...prevRows];
         });
+    };
+
+    const undoChanges = () => {
+        if (cellChangesIndex >= 0) {
+            const changes = cellChanges[cellChangesIndex];
+            setRows((prevRows) => {
+                changes.forEach((change: CellChange<TestGridCells>) => {
+                    const changeRowIdx = prevRows.findIndex(
+                        (el) => el.rowId === change.rowId
+                    );
+                    const changeColumnIdx = columns.findIndex(
+                        (el) => el.columnId === change.columnId
+                    );
+                    prevRows[changeRowIdx].cells[changeColumnIdx] = change.previousCell;
+                });
+                setCellChangesIndex(cellChangesIndex - 1);
+                return [...prevRows];
+            });
+        }
+    };
+
+    const redoChanges = () => {
+        if (cellChangesIndex + 1 <= cellChanges.length - 1) {
+            const changes = cellChanges[cellChangesIndex + 1];
+            setRows((prevRows) => {
+                changes.forEach((change: CellChange<TestGridCells>) => {
+                    const changeRowIdx = prevRows.findIndex(
+                        (el) => el.rowId === change.rowId
+                    );
+                    const changeColumnIdx = columns.findIndex(
+                        (el) => el.columnId === change.columnId
+                    );
+                    prevRows[changeRowIdx].cells[changeColumnIdx] = change.newCell;
+                });
+                setCellChangesIndex(cellChangesIndex + 1);
+                return [...prevRows];
+            });
+        }
     };
 
     const reorderArray = <T extends {}>(arr: T[], idxs: number[], to: number) => {
@@ -207,6 +251,13 @@ export const TestGrid: React.FC<TestGridProps> = (props) => {
         return true;
     }
 
+    const isMacOs = () => {
+        if (typeof window !== 'undefined') {
+            return window.navigator.appVersion.indexOf('Mac') !== -1;
+        }
+        return false;
+    }
+
     const Component = component;
     return (
         <>
@@ -222,7 +273,18 @@ export const TestGrid: React.FC<TestGridProps> = (props) => {
                     display: 'flex',
                     flexDirection: 'row'
                 }),
-            }}>
+            }}
+                onKeyDown={(e) => {
+                    if ((!isMacOs() && e.ctrlKey) || e.metaKey) {
+                        switch (e.key) {
+                            case 'z':
+                                return undoChanges();
+                            case 'y':
+                                return redoChanges();
+                        }
+                    }
+                }}
+            >
                 {config.enableAdditionalContent &&
                     <>
                         <Logo isPro={config.isPro} />
