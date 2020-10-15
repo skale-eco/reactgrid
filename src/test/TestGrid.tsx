@@ -345,6 +345,8 @@ export const TestGrid: React.FC<TestGridProps> = (props) => {
                 }
             </div>
             <input type='text' data-cy='outer-input' />
+            <button onClick={undoChanges}>Undo</button>
+            <button onClick={redoChanges}>Redo</button>
             <Logo isPro={config.isPro} />
             {config.enableAdditionalContent &&
                 <>
