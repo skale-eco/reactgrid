@@ -6,6 +6,7 @@ import { getCellProperty } from '../Functions/getCellProperty';
 import { keyCodes } from '../Functions/keyCodes';
 import { Cell, CellTemplate, Compatible, Uncertain, UncertainCompatible } from '../Model/PublicModel';
 import { getCharFromKeyCode } from './getCharFromKeyCode';
+import { EmptyCell } from '../../core';
 
 export interface EmailCell extends Cell {
     type: 'email',
@@ -14,7 +15,7 @@ export interface EmailCell extends Cell {
     renderer?: (text: string) => React.ReactNode
 }
 
-export class EmailCellTemplate implements CellTemplate<EmailCell> {
+export class EmailCellTemplate implements CellTemplate<EmailCell | EmptyCell> {
 
     getCompatibleCell(uncertainCell: Uncertain<EmailCell>): Compatible<EmailCell> {
         const text = getCellProperty(uncertainCell, 'text', 'string');
@@ -29,8 +30,12 @@ export class EmailCellTemplate implements CellTemplate<EmailCell> {
         return { cell, enableEditMode: keyCode === keyCodes.POINTER || keyCode === keyCodes.ENTER }
     }
 
-    update(cell: Compatible<EmailCell>, cellToMerge: UncertainCompatible<EmailCell>): Compatible<EmailCell> {
-        return this.getCompatibleCell({ ...cell, text: cellToMerge.text })
+    update(cell: Compatible<EmailCell>, cellToMerge: UncertainCompatible<EmailCell> | UncertainCompatible<EmptyCell>):
+        Compatible<EmailCell> | Compatible<EmptyCell> {
+        if (cellToMerge.type === '') {
+            this.getCompatibleCell({ type: cell.type, text: cellToMerge.text })
+        }
+        return this.getCompatibleCell({ ...cell, text: cellToMerge.text, type: cellToMerge.type })
     }
 
     getClassName(cell: Compatible<EmailCell>, isInEditMode: boolean) {

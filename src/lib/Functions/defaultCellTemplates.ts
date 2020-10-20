@@ -2,6 +2,7 @@ import {
     ChevronCellTemplate, TimeCellTemplate, EmailCellTemplate, DateCellTemplate, CheckboxCellTemplate,
     HeaderCellTemplate, NumberCellTemplate, TextCellTemplate
 } from '../CellTemplates';
+import { EmptyCellTemplate } from '../CellTemplates/EmptyCellTemplate';
 import { CellTemplates } from '../Model/PublicModel';
 
 export const defaultCellTemplates: CellTemplates = {
@@ -12,5 +13,6 @@ export const defaultCellTemplates: CellTemplates = {
     date: new DateCellTemplate(),
     email: new EmailCellTemplate(),
     time: new TimeCellTemplate(),
-    chevron: new ChevronCellTemplate()
+    chevron: new ChevronCellTemplate(),
+    '': new EmptyCellTemplate(),
 };

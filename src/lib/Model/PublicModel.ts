@@ -7,7 +7,7 @@
  */
 
 import {
-    TextCell, HeaderCell, CheckboxCell, DateCell, EmailCell, ChevronCell, NumberCell, TimeCell
+    TextCell, HeaderCell, CheckboxCell, DateCell, EmailCell, ChevronCell, NumberCell, TimeCell, EmptyCell
 } from './../CellTemplates';
 
 /**
