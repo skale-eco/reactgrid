@@ -19,10 +19,12 @@ export class TextCellTemplate implements CellTemplate<TextCell> {
     getCompatibleCell(uncertainCell: Uncertain<TextCell>): Compatible<TextCell> {
         const text = getCellProperty(uncertainCell, 'text', 'string');
         const value = parseFloat(text); // TODO more advanced parsing for all text based cells
-        return { ...uncertainCell, text, value };
+        // TODO add type: '...' to other cell templates 
+        return { ...uncertainCell, type: 'text', text, value };
     }
 
     update(cell: Compatible<TextCell>, cellToMerge: UncertainCompatible<TextCell>): Compatible<TextCell> {
+        console.log(cellToMerge);
         return this.getCompatibleCell({ ...cell, text: cellToMerge.text })
     }
 

@@ -30,12 +30,8 @@ export class EmailCellTemplate implements CellTemplate<EmailCell | EmptyCell> {
         return { cell, enableEditMode: keyCode === keyCodes.POINTER || keyCode === keyCodes.ENTER }
     }
 
-    update(cell: Compatible<EmailCell>, cellToMerge: UncertainCompatible<EmailCell> | UncertainCompatible<EmptyCell>):
-        Compatible<EmailCell> | Compatible<EmptyCell> {
-        if (cellToMerge.type === '') {
-            this.getCompatibleCell({ type: cell.type, text: cellToMerge.text })
-        }
-        return this.getCompatibleCell({ ...cell, text: cellToMerge.text, type: cellToMerge.type })
+    update(cell: Compatible<EmailCell>, cellToMerge: UncertainCompatible<EmailCell>): Compatible<EmailCell> {
+        return this.getCompatibleCell({ ...cell, text: cellToMerge.text })
     }
 
     getClassName(cell: Compatible<EmailCell>, isInEditMode: boolean) {
