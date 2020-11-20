@@ -46,18 +46,16 @@ export class DropdownCellTemplate implements CellTemplate<DropdownCell> {
         } catch {
             inputValue = undefined;
         }
-        let isOpen: boolean;
-        try {
-            isOpen = getCellProperty(uncertainCell, 'isOpen', 'boolean');
-        } catch {
-            isOpen = false;
-        }
         const text = selectedValue || '';
-        return { ...uncertainCell, selectedValue, text, value, values, isDisabled, isOpen, inputValue };
+        return { ...uncertainCell, selectedValue, text, value, values, isDisabled, inputValue };
     }
 
     update(cell: Compatible<DropdownCell>, cellToMerge: UncertainCompatible<DropdownCell>): Compatible<DropdownCell> {
-        return this.getCompatibleCell({ ...cell, selectedValue: cellToMerge.selectedValue, isOpen: cellToMerge.isOpen, inputValue: cellToMerge.inputValue });
+        return this.getCompatibleCell({
+            ...cell, selectedValue: cellToMerge.selectedValue,
+            ...(typeof cellToMerge.isOpen === 'undefined' && { isOpen: cellToMerge.isOpen }),
+            inputValue: cellToMerge.inputValue
+        });
     }
 
     getClassName(cell: Compatible<DropdownCell>, isInEditMode: boolean) {
@@ -67,11 +65,12 @@ export class DropdownCellTemplate implements CellTemplate<DropdownCell> {
 
     handleKeyDown(cell: Compatible<DropdownCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): { cell: Compatible<DropdownCell>, enableEditMode: boolean } {
         if ((keyCode === keyCodes.SPACE || keyCode === keyCodes.ENTER) && !shift) {
-            return { cell: this.getCompatibleCell({ ...cell, isOpen: !cell.isOpen }), enableEditMode: false };
+            return { cell: this.getCompatibleCell({ ...cell, isOpen: true }), enableEditMode: false };
         }
         const char = getCharFromKeyCode(keyCode, shift);
-        if (!ctrl && !alt && isAlphaNumericKey(keyCode))
-            return { cell: this.getCompatibleCell({ ...cell, inputValue: shift ? char : char.toLowerCase(), isOpen: !cell.isOpen }), enableEditMode: false }
+        if (!ctrl && !alt && isAlphaNumericKey(keyCode)) {
+            return { cell: this.getCompatibleCell({ ...cell, inputValue: shift ? char : char.toLowerCase(), isOpen: true }), enableEditMode: false }
+        }
         return { cell, enableEditMode: false };
     }
 
@@ -83,18 +82,24 @@ export class DropdownCellTemplate implements CellTemplate<DropdownCell> {
         const selectRef = React.useRef<any>(null);
 
         const [inputValue, setInputValue] = React.useState<string | undefined>(cell.inputValue);
+        const [isOpen, setIsOpen] = React.useState<boolean>(!!cell.isOpen);
 
         React.useEffect(() => {
-            if (cell.isOpen && selectRef.current) {
+            if (isOpen && selectRef.current) {
                 selectRef.current.focus();
                 setInputValue(cell.inputValue);
             }
-        }, [cell.isOpen, cell.inputValue]);
-
+        }, [isOpen, cell.inputValue]);
         return (
             <div
                 style={{ width: '100%' }}
-                onPointerDown={e => onCellChanged(this.getCompatibleCell({ ...cell, isOpen: true }), true)}
+                onPointerDown={e => {
+                    if (typeof cell.isOpen === 'undefined') {
+                        setIsOpen(true);
+                    } else {
+                        onCellChanged(this.getCompatibleCell({ ...cell, isOpen: true }), true)
+                    }
+                }}
             >
                 <Select
                     {...(cell.inputValue && {
@@ -104,10 +109,30 @@ export class DropdownCellTemplate implements CellTemplate<DropdownCell> {
                     })}
                     isSearchable={true}
                     ref={selectRef}
-                    {...(cell.isOpen !== undefined && { menuIsOpen: cell.isOpen })}
-                    onMenuClose={() => onCellChanged(this.getCompatibleCell({ ...cell, isOpen: !cell.isOpen, inputValue: undefined }), true)}
-                    onMenuOpen={() => onCellChanged(this.getCompatibleCell({ ...cell, isOpen: true }), true)}
-                    onChange={(e) => onCellChanged(this.getCompatibleCell({ ...cell, selectedValue: (e as { value: string }).value, isOpen: false, inputValue: undefined }), true)}
+                    menuIsOpen={isOpen}
+                    onMenuClose={() => {
+                        if (typeof cell.isOpen === 'undefined') {
+                            // setIsOpen(false);
+                            // onCellChanged(this.getCompatibleCell({ ...cell, inputValue: undefined }), true);
+                        } else {
+                            onCellChanged(this.getCompatibleCell({ ...cell, isOpen: false, inputValue: undefined }), true);
+                        }
+                    }}
+                    onMenuOpen={() => {
+                        if (typeof cell.isOpen === 'undefined') {
+                            setIsOpen(true);
+                        } else {
+                            onCellChanged(this.getCompatibleCell({ ...cell, isOpen: true }), true)
+                        }
+                    }}
+                    onChange={(e) => {
+                        if (typeof cell.isOpen === 'undefined') {
+                            setIsOpen(false);
+                            onCellChanged(this.getCompatibleCell({ ...cell, selectedValue: (e as { value: string }).value, inputValue: undefined }), true)
+                        } else {
+                            onCellChanged(this.getCompatibleCell({ ...cell, selectedValue: (e as { value: string }).value, isOpen: false, inputValue: undefined }), true)
+                        }
+                    }}
                     blurInputOnSelect={true}
                     defaultValue={cell.values.find(val => val.value === cell.selectedValue)}
                     isDisabled={cell.isDisabled}
