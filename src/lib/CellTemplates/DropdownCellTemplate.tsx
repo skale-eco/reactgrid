@@ -112,6 +112,7 @@ export class DropdownCellTemplate implements CellTemplate<DropdownCell> {
                     menuIsOpen={isOpen}
                     onMenuClose={() => {
                         if (typeof cell.isOpen === 'undefined') {
+                            //TODO
                             // setIsOpen(false);
                             // onCellChanged(this.getCompatibleCell({ ...cell, inputValue: undefined }), true);
                         } else {
