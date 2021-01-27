@@ -1,9 +1,10 @@
 import { Builder, ThenableWebDriver } from 'selenium-webdriver';
 import { Utils } from '../utils';
-import { browserstackURL, IpadCapabilities } from '../mobileOptions';
+import { browserstackCapabilities, browserstackURL, IpadCapabilities } from '../mobileOptions';
 import { config } from '../../test/testEnvConfig';
+import { remote, } from 'webdriverio';
 
-describe.skip('Cell templates', () => {
+describe('Cell templates', () => {
 
     let driver: ThenableWebDriver;
     let utils: Utils;
@@ -21,7 +22,7 @@ describe.skip('Cell templates', () => {
     });
 
     beforeEach(async () => {
-        await utils.visitBrowserStackLocal();
+        // await utils.visitBrowserStackLocal();
     });
 
     afterAll(async () => {
@@ -36,7 +37,22 @@ describe.skip('Cell templates', () => {
 
     it('pick new date in DateCell', async () => {
 
+        const browser = await remote({
+            logLevel: 'error',
+            path: '/', // remove `path` if you decided using something different from driver binaries.
+            capabilities: {
+                browserName: 'chrome'
+                // ...IpadCapabilities as any
+            },
+            user: 'bsuser7502154679',
+            // key: process.env.BROWSERSTACK_ACCESS_KEY,
+            key: 'F43JQwzutvrH4ef8spn9',
+        })
+        await browser.url('https://webdriver.io')
+
         const title = await driver.getTitle();
+
+
 
         // Setting the status of test as 'passed' or 'failed' based on the condition; if title of the web page included 'BrowserStack'
         if (title.includes('ReactGrid MIT')) {

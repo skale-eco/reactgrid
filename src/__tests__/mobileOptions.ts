@@ -33,5 +33,6 @@ export const mobileLocalcapabilities = {
     "browserName": 'Chrome',
     "deviceName": process.env.DEFAULT_ANDROID_DEVICE_NAME,
     "platformName": 'Android',
+    // "kdsa": 'ds',
     "noSign": true,
 }

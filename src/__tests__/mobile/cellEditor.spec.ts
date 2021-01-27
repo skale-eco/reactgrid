@@ -3,7 +3,7 @@ import { CellLocation, Utils } from '../utils';
 import { appiumURL, mobileLocalcapabilities } from '../mobileOptions';
 import { config } from '../../test/testEnvConfig';
 
-describe('Cell editor', () => {
+describe.skip('Cell editor', () => {
 
     let driver: ThenableWebDriver;
     let utils: Utils;
