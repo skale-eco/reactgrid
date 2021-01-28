@@ -1,64 +1,66 @@
-import { Builder, ThenableWebDriver } from 'selenium-webdriver';
-import { Utils } from '../utils';
-import { browserstackCapabilities, browserstackURL, IpadCapabilities } from '../mobileOptions';
+import { remote, BrowserObject } from 'webdriverio';
+import { MobileUtils } from '../mobileUtils';
+import { browserstackCapabilities } from '../mobileOptions';
 import { config } from '../../test/testEnvConfig';
-import { remote, } from 'webdriverio';
 
 describe('Cell templates', () => {
 
-    let driver: ThenableWebDriver;
-    let utils: Utils;
+    let browser: BrowserObject;
+    let utils: MobileUtils;
 
     jest.setTimeout(30000);
 
     beforeAll(async () => {
-        driver = new Builder()
-            .forBrowser('chrome')
-            .usingServer(browserstackURL)
-            .withCapabilities(IpadCapabilities)
-            .build();
-        utils = new Utils(driver, config, 'mobileIPad');
-        await utils.wipeScreenshotsDir();
+        browser = await remote({
+            user: process.env.USERNAME,
+            key: process.env.BROWSERSTACK_ACCESS_KEY,
+            capabilities: {
+                ...browserstackCapabilities,
+                logLevel: 'error',
+            },
+            logLevel: 'error',
+        });
+        utils = new MobileUtils(browser, config);
+        // await utils.wipeScreenshotsDir();
     });
 
     beforeEach(async () => {
-        // await utils.visitBrowserStackLocal();
+        await utils.visitBrowserStackLocal();
     });
 
     afterAll(async () => {
-        const nonProductionAndSuccess = !utils.isTestProd() && utils.isLastAsserionPassed();
-        if (nonProductionAndSuccess) {
-            if (await (await driver.getSession()).getId()) {
-                await driver.close();
-                await driver.quit();
-            }
-        }
+        await browser.pause(3000);
+        await browser.deleteSession();
     });
 
-    it('pick new date in DateCell', async () => {
+    it('', async () => {
 
-        const browser = await remote({
-            logLevel: 'error',
-            path: '/', // remove `path` if you decided using something different from driver binaries.
-            capabilities: {
-                browserName: 'chrome'
-                // ...IpadCapabilities as any
-            },
-            user: 'bsuser7502154679',
-            // key: process.env.BROWSERSTACK_ACCESS_KEY,
-            key: 'F43JQwzutvrH4ef8spn9',
-        })
-        await browser.url('https://webdriver.io')
+        const title = await browser.getTitle();
 
-        const title = await driver.getTitle();
+        const cell1 = await browser.$('[data-cell-colidx="0"][data-cell-rowidx="14"]');
+        const cell2 = await browser.$('[data-cell-colidx="1"][data-cell-rowidx="18"]');
 
+        // await cell1.doubleClick();
+        // await utils.openContextMenu(400, 400);
 
+        // await cell1.dragAndDrop(cell2, { // mouse  end with error
+        //     duration: 500,
+        // });
 
-        // Setting the status of test as 'passed' or 'failed' based on the condition; if title of the web page included 'BrowserStack'
-        if (title.includes('ReactGrid MIT')) {
-            await driver.executeScript('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "Title contains ReactGrid MIT!"}}');
+        // await utils.scrollTo(200, 200, cell1);
+
+        await utils.doubleTap(600, 600);
+
+        // await utils.doubleTap(400, 400);
+
+        const isOpen = await browser.isKeyboardShown();
+
+        console.log(isOpen);
+
+        if (title.includes('ReactGrid')) {
+            await utils.testPassed();
         } else {
-            await driver.executeScript('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "Title does not contain ReactGrid MIT!"}}');
+            await utils.testFailed();
         }
 
     });

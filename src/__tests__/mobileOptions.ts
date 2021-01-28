@@ -8,10 +8,10 @@ export const localServerOptions = {
 
 export const browserstackCapabilities = {
     "os_version": "10.0",
-    "device": "Samsung Galaxy S20 Ultra",
+    "device": "Samsung Galaxy Tab S7",
     "real_mobile": "true",
     "browserstack.appium_version": "1.19.1",
-    "browserstack.local": "false",
+    "browserstack.local": true,
     "browserstack.user": USERNAME,
     "browserstack.key": AUTOMATE_KEY,
     "browserName": "Chrome"
@@ -33,6 +33,5 @@ export const mobileLocalcapabilities = {
     "browserName": 'Chrome',
     "deviceName": process.env.DEFAULT_ANDROID_DEVICE_NAME,
     "platformName": 'Android',
-    // "kdsa": 'ds',
     "noSign": true,
 }

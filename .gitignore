@@ -34,3 +34,4 @@ yarn-error.log*
 debug.*
 .env
 screenshots
+local.log
