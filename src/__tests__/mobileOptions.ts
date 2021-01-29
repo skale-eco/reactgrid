@@ -11,6 +11,7 @@ export const browserstackCapabilities = {
     "device": "Samsung Galaxy Tab S7",
     "real_mobile": "true",
     "browserstack.appium_version": "1.19.1",
+    'deviceOrientation': 'landscape',
     "browserstack.local": true,
     "browserstack.user": USERNAME,
     "browserstack.key": AUTOMATE_KEY,

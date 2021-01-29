@@ -2,6 +2,11 @@ import cypressJson from '../../cypress.json';
 import { TestConfig } from '../test/testEnvConfig';
 import { BrowserObject, Element } from 'webdriverio';
 
+export interface CellLocation {
+    idx: number;
+    idy: number;
+}
+
 export class MobileUtils {
 
     private lastAssertionResult: 'passed' | 'failed' | undefined;
@@ -46,8 +51,8 @@ export class MobileUtils {
 
     async scrollTo(x: number, y: number, element: Element) {
         await this.browser.touchScroll( // ??
-            200,
-            200,
+            x,
+            y,
             element.elementId
         );
     }
@@ -60,12 +65,62 @@ export class MobileUtils {
         await this.browser.executeScript(`browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "${msg}"}}`);
     }
 
-    async tap(x: number, y: number) {
-        await this.browser.touchAction({// touch
+    async getCell({ idx, idy }: CellLocation): Promise<Element> {
+        return await this.browser.$(`[data-cell-colidx="${idx}"][data-cell-rowidx="${idy}"]`);
+    }
+
+    async sendKeys(value: string | string[]): Promise<void> {
+        try {
+            await this.browser.keys(value);
+        } catch (error) { }
+    }
+
+    async tap(x: number, y: number): Promise<void> {
+        await this.browser.touchAction({
             action: 'tap',
             x,
             y,
-        })
+        });
+    }
+
+    async getCellEditor(): Promise<Element> {
+        return await this.browser.$('.rg-cell.rg-celleditor');
+    }
+
+    async waitForCellEditor(): Promise<void> {
+        await this.browser.waitUntil(
+            async () => await (await this.getCellEditor()).isExisting(),
+            {
+                timeout: 2000,
+                timeoutMsg: 'Cell editor not found'
+            }
+        );
+    }
+
+    async dragAndDrop(x: number, y: number, xOffset: number, yOffset: number) {
+        await this.browser.touchAction([
+            { action: 'press', x, y },
+            { action: 'moveTo', x: x + xOffset, y: y + yOffset },
+            { action: 'release' },
+        ]);
+    }
+
+    async runner(testBody: () => void) {
+        try {
+            const title = await this.browser.getTitle();
+            await this.runAssertion(async () => {
+                try {
+                    expect(title).toContain('ReactGrid');
+                } catch (error) {
+                    throw Error(`Couldn't load ReactGrid page to continue testing!`);
+                }
+            });
+            await testBody();
+            await this.testPassed();
+        } catch (error) {
+            await this.testFailed();
+            throw error;
+        }
     }
 
     async doubleTap(x: number, y: number) {

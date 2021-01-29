@@ -1,30 +1,46 @@
-import { Builder, ThenableWebDriver } from 'selenium-webdriver';
-import { Utils } from '../utils';
-import { appiumURL, mobileLocalcapabilities } from '../mobileOptions';
+import { remote, BrowserObject } from 'webdriverio';
+import { MobileUtils } from '../mobileUtils';
+import { browserstackCapabilities } from '../mobileOptions';
 import { config } from '../../test/testEnvConfig';
 
 describe.skip('Scroll', () => {
 
-    let driver: ThenableWebDriver;
-    let utils: Utils;
+    let browser: BrowserObject;
+    let utils: MobileUtils;
 
     jest.setTimeout(30000);
 
     beforeAll(async () => {
-        driver = new Builder()
-            .usingServer(appiumURL)
-            .withCapabilities(mobileLocalcapabilities)
-            .forBrowser('Chrome')
-            .build();
-        utils = new Utils(driver, config, 'mobileAndroidTablet');
-        await utils.wipeScreenshotsDir();
+        browser = await remote({
+            user: process.env.USERNAME,
+            key: process.env.BROWSERSTACK_ACCESS_KEY,
+            capabilities: {
+                ...browserstackCapabilities,
+                logLevel: 'error',
+            },
+            logLevel: 'error',
+        });
+        utils = new MobileUtils(browser, config);
     });
 
     beforeEach(async () => {
-        await utils.visitLocal();
+        await utils.visitBrowserStackLocal();
+    });
+
+    afterAll(async () => {
+        await browser.pause(3000);
+        await browser.deleteSession();
     });
 
     it.skip('should NOT scroll when focused cell is dragged', async () => {
+        throw new Error(`Test not implemented!`);
+    });
+
+    it.skip('sticky should be rendered on top', async () => {
+        throw new Error(`Test not implemented!`);
+    });
+
+    it.skip('virtual scroll should work on sticky pinned to body and rerender view', async () => {
         throw new Error(`Test not implemented!`);
     });
 

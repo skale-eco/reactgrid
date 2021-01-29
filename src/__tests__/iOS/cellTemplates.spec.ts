@@ -3,7 +3,7 @@ import { MobileUtils } from '../mobileUtils';
 import { browserstackCapabilities } from '../mobileOptions';
 import { config } from '../../test/testEnvConfig';
 
-describe('Cell templates', () => {
+describe.skip('Cell templates', () => {
 
     let browser: BrowserObject;
     let utils: MobileUtils;
@@ -21,7 +21,6 @@ describe('Cell templates', () => {
             logLevel: 'error',
         });
         utils = new MobileUtils(browser, config);
-        // await utils.wipeScreenshotsDir();
     });
 
     beforeEach(async () => {
