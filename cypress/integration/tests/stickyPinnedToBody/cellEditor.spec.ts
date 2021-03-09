@@ -1,6 +1,8 @@
 import { enablePinnedToBodyConfig as config } from '../../../../src/test/testEnvConfig';
 import { Utilities } from '../../common/utils';
 import { visitStickyPinnedToBody } from '../../common/visit';
+import { constants } from '../../common/constants';
+
 
 const utils = new Utilities(config);
 
@@ -170,8 +172,41 @@ context('Cell editor position', () => {
     ].forEach(utils.testCellEditorOnSticky.bind(utils));
   });
 
-  it.skip('cell editor should be fully visible on double click on partially visible cell focus', () => {
-    // 🟠 TODO fix it
+  it('cell editor should be fully visible on double click on horizontally partially visible cell focus', () => { // ✅
+    utils.selectCell((utils.getConfig().cellWidth * 4) - 10, (utils.getConfig().cellHeight * 3) - 10);
+    utils.getCellFocus().should('be.visible');
+    utils.scrollTo(utils.getCellXCenter(), 0);
+    cy.wait(utils.wait());
+    utils.keyDown(constants.keyCodes.ArrowDown, { force: true }, 20, false);
+
+    cy.window().its('scrollX').then($scrollLeft => {
+      const firstScrollValue = utils.round($scrollLeft);
+      utils.scrollTo(utils.getCellXCenter(), 0);
+      utils.keyDown(constants.keyCodes.Enter, { force: true }, 20, false);
+      cy.window().its('scrollX').then($scrollLeft2 => {
+        cy.wait(utils.wait());
+        const secondSrollValue = utils.round($scrollLeft2);
+        expect(firstScrollValue, 'Scroll left').to.be.equal(secondSrollValue);
+      });
+    });
   });
 
+  it('cell editor should be fully visible on double click on vertically partially visible cell focus', () => { // ✅
+    utils.selectCell((utils.getConfig().cellWidth * 3) - 10, (utils.getConfig().cellHeight * 7) - 10);
+    utils.getCellFocus().should('be.visible');
+    utils.scrollTo(0, utils.getConfig().cellHeight + utils.getCellYCenter());
+    cy.wait(utils.wait());
+    utils.keyDown(constants.keyCodes.ArrowRight, { force: true }, 20, false);
+
+    cy.window().its('scrollY').then($scrollTop => {
+      const firstScrollValue = utils.round($scrollTop);
+      utils.scrollTo(0, utils.getConfig().cellHeight + utils.getCellYCenter());
+      utils.keyDown(constants.keyCodes.Enter, { force: true }, 20, false);
+      cy.window().its('scrollY').then($scrollTop2 => {
+        cy.wait(utils.wait());
+        const secondSrollValue = utils.round($scrollTop2);
+        expect(firstScrollValue, 'Scroll Top').to.be.equal(secondSrollValue);
+      });
+    });
+  });
 });

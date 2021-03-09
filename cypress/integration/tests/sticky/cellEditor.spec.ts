@@ -1,6 +1,8 @@
 import { enableSymetric as config } from '../../../../src/test/testEnvConfig';
 import { Utilities } from '../../common/utils';
 import { visitSymetric } from '../../common/visit';
+import { constants } from '../../common/constants';
+
 
 const utils = new Utilities(config);
 
@@ -166,8 +168,44 @@ context('Cell editor position', () => {
     ].forEach(utils.testCellEditorOnSticky.bind(utils));
   });
 
-  it.skip('cell editor should be fully visible on double click on partially visible cell focus', () => {
-    // 🟠 TODO fix it
+  it('cell editor should be fully visible on double click on horizontally partially visible cell focus', () => { // ✅
+    utils.selectCell((utils.getConfig().cellWidth * 3) - 10, (utils.getConfig().cellHeight * 3) - 10);
+    utils.getCellFocus().should('be.visible');
+    utils.scrollTo(utils.getCellXCenter(), 0);
+    cy.wait(utils.wait());
+    utils.keyDown(constants.keyCodes.ArrowDown, { force: true }, 20, false);
+
+    utils.getScrollableElement().then($scrollable => {
+      const v = $scrollable[0];
+      utils.scrollTo(utils.getCellXCenter(), 0);
+      utils.keyDown(constants.keyCodes.Enter, { force: true }, 20, false);
+      utils.getScrollableElement().then($scrollable => {
+        const v2 = $scrollable[0];
+        cy.wait(utils.wait());
+        const secondSrollValue = utils.round(v2.scrollLeft);
+        expect(v.scrollLeft, 'Scroll left').to.be.equal(secondSrollValue);
+      });
+    });
+  });
+
+  it('cell editor should be fully visible on double click on vertically partially visible cell focus', () => { // ✅
+    utils.selectCell((utils.getConfig().cellWidth * 3) - 10, (utils.getConfig().cellHeight * 3) - 10);
+    utils.getCellFocus().should('be.visible');
+    utils.scrollTo(0, utils.getCellYCenter());
+    cy.wait(utils.wait());
+    utils.keyDown(constants.keyCodes.ArrowRight, { force: true }, 20, false);
+
+    utils.getScrollableElement().then($scrollable => {
+      const v = $scrollable[0];
+      utils.scrollTo(0, utils.getCellYCenter());
+      utils.keyDown(constants.keyCodes.Enter, { force: true }, 20, false);
+      utils.getScrollableElement().then($scrollable => {
+        const v2 = $scrollable[0];
+        cy.wait(utils.wait());
+        const secondSrollValue = utils.round(v2.scrollTop);
+        expect(v.scrollTop, 'Scroll Top').to.be.equal(secondSrollValue);
+      });
+    });
   });
 
 });
