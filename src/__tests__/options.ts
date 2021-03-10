@@ -1,5 +1,8 @@
 import { Capabilities } from 'selenium-webdriver';
 import { Options } from 'selenium-webdriver/chrome';
+import { AUTOMATE_KEY, USERNAME } from './mobileOptions';
+
+export const browserstackURL = `https://${USERNAME}:${AUTOMATE_KEY}@hub-cloud.browserstack.com/wd/hub`;
 
 export function getOptions(): Options {
     const options = new Options();
@@ -58,3 +61,17 @@ export function getSafariCapabilities(): Capabilities {
     capabilities.set('browserName', 'safari');
     return capabilities;
 }
+
+export const getRemoteDesktopSafariCapabilities = (name = ``) => ({
+    "os": "OS X",
+    "os_version": "Big Sur",
+    "browser_version": "14.0",
+    "browserName": "Safari",
+    "resolution": "1920x1080",
+    "browserstack.selenium_version": "3.14.0",
+    "browserstack.safari.enablePopups": "true",
+    'name': 'desktop Safari',
+    'browserstack.local': true,
+    'browserstack.user': USERNAME,
+    'browserstack.key': AUTOMATE_KEY,
+});

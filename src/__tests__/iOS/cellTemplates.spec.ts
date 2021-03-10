@@ -1,9 +1,10 @@
+/// <reference types="jest" />
 import { remote, BrowserObject } from 'webdriverio';
 import { MobileUtils } from '../mobileUtils';
-import { browserstackCapabilities } from '../mobileOptions';
+import { androidTabletCapabilities } from '../mobileOptions';
 import { config } from '../../test/testEnvConfig';
 
-describe.skip('Cell templates', () => {
+describe('Cell templates', () => {
 
     let browser: BrowserObject;
     let utils: MobileUtils;
@@ -15,8 +16,10 @@ describe.skip('Cell templates', () => {
             user: process.env.USERNAME,
             key: process.env.BROWSERSTACK_ACCESS_KEY,
             capabilities: {
-                ...browserstackCapabilities,
+                // TODO test on iOS
+                ...androidTabletCapabilities,
                 logLevel: 'error',
+                name: 'iOS cell templates'
             },
             logLevel: 'error',
         });
@@ -32,7 +35,7 @@ describe.skip('Cell templates', () => {
         await browser.deleteSession();
     });
 
-    it('', async () => {
+    it.skip('', async () => {
 
         const title = await browser.getTitle();
 

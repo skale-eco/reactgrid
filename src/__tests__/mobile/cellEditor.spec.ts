@@ -1,6 +1,7 @@
+/// <reference types="jest" />
 import { remote, BrowserObject } from 'webdriverio';
 import { MobileUtils } from '../mobileUtils';
-import { browserstackCapabilities } from '../mobileOptions';
+import { androidTabletCapabilities } from '../mobileOptions';
 import { config } from '../../test/testEnvConfig';
 
 describe('Cell editor', () => {
@@ -15,7 +16,7 @@ describe('Cell editor', () => {
             user: process.env.USERNAME,
             key: process.env.BROWSERSTACK_ACCESS_KEY,
             capabilities: {
-                ...browserstackCapabilities,
+                ...androidTabletCapabilities,
                 logLevel: 'error',
                 'name': 'Cell editor',
             },
@@ -38,11 +39,8 @@ describe('Cell editor', () => {
 
             await utils.tap(600, 1200);
             await utils.sendKeys('text');
-
             await utils.waitForCellEditor();
-
             const cellEditor = await utils.getCellEditor();
-
             const cellEditorText = await (await cellEditor.$('input')).getValue();
 
             await utils.runAssertion(async () => {
@@ -57,9 +55,7 @@ describe('Cell editor', () => {
 
             await utils.tap(600, 1100);
             await utils.sendKeys('text');
-
             await utils.waitForCellEditor();
-
             const isKeyboardShown = await browser.isKeyboardShown();
 
             await utils.runAssertion(async () => {
@@ -75,30 +71,29 @@ describe('Cell editor', () => {
         });
     });
 
-    it.only('should NOT be able to scroll view if started move finger on focused cell', async () => {
+    it('should NOT be able to scroll view if started move finger on focused cell', async () => {
         await utils.runner(async () => {
             const startX = 400,
                 startY = 600;
 
             await utils.tap(startX, startY);
+            const { scrollLeft, scrollTop } = await utils.getScroll();
+            await utils.dragAndDrop(startX, startY, -400, 0);
 
-            const { scrollLeft, scrollTop } = await browser.execute(() => {
-                const e = document.getElementsByClassName('test-grid-container')[0];
-                return { scrollLeft: e.scrollLeft, scrollTop: e.scrollTop };
+            await utils.runAssertion(async () => {
+                const { scrollLeft: sL, scrollTop: sT } = await utils.getScroll();
+                expect(sL).toBe(scrollLeft);
+                expect(sT).toBe(scrollTop);
             });
 
-            console.log({ scrollLeft, scrollTop });
-
-            // const cellEditor = await utils.getCellEditor()
-
             await utils.dragAndDrop(startX + 300, startY, -400, 0);
+
+            await utils.runAssertion(async () => {
+                const { scrollLeft: sL, scrollTop: sT } = await utils.getScroll();
+                expect(sL).not.toBe(scrollLeft);
+            });
+
         });
     });
-
-    it.skip('', async () => {
-        await utils.runner(async () => {
-            // await browser.url('http://reactgrid.com/');
-        });
-    })
 
 });

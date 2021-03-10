@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import cypressJson from '../../cypress.json';
 import { TestConfig } from '../test/testEnvConfig';
 import { BrowserObject, Element } from 'webdriverio';
@@ -47,6 +48,13 @@ export class MobileUtils {
 
     isTestProd(): boolean {
         return process.env.TEST_PROD === 'true';
+    }
+
+    async getScroll(): Promise<{ scrollLeft: number, scrollTop: number }> {
+        return await this.browser.execute(() => {
+            const e = document.getElementsByClassName('test-grid-container')[0];
+            return { scrollLeft: e.scrollLeft, scrollTop: e.scrollTop };
+        });
     }
 
     async scrollTo(x: number, y: number, element: Element) {

@@ -1,9 +1,10 @@
+/// <reference types="jest" />
 import { Builder, By, Key, ThenableWebDriver, WebElement } from 'selenium-webdriver';
 import { CellLocation, Utils } from '../utils';
 import { getChromeCapabilities, getOptions } from '../options';
 import { config } from '../../test/testEnvConfig';
 
-describe.skip('Clipboard', () => {
+describe('Clipboard', () => {
 
     let driver: ThenableWebDriver;
     let utils: Utils;

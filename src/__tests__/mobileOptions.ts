@@ -1,12 +1,11 @@
-const USERNAME = process.env.USERNAME;
-const AUTOMATE_KEY = process.env.AUTOMATE_KEY;
-export const browserstackURL = `https://${USERNAME}:${AUTOMATE_KEY}@hub-cloud.browserstack.com/wd/hub`;
+export const USERNAME = process.env.USERNAME;
+export const AUTOMATE_KEY = process.env.AUTOMATE_KEY;
 
 export const localServerOptions = {
     'key': process.env.BROWSERSTACK_ACCESS_KEY,
 };
 
-export const browserstackCapabilities = {
+export const androidTabletCapabilities = {
     "os_version": "10.0",
     "device": "Samsung Galaxy Tab S7",
     "real_mobile": "true",

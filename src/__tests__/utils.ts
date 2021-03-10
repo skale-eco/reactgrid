@@ -9,7 +9,7 @@ export interface CellLocation {
     idy: number;
 }
 
-export type TestedBrowsers = 'desktopSafari' | 'desktopChrome' | 'mobileIPad' | 'mobileAndroidTablet';
+export type TestedBrowsers = 'desktopSafari' | 'desktopChrome' | 'mobileIPad' | 'mobileAndroidTablet' | 'remoteDesktopSafari';
 
 export class Utils {
 
@@ -57,7 +57,21 @@ export class Utils {
     }
 
     async writeTextToClipboard(text: string): Promise<unknown> {
-        return await this.driver.executeScript('navigator.clipboard.writeText(`' + text + '`);');
+        return await this.driver.executeScript(`
+            if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText('${text}');
+            } else {
+                let input = document.createElement("input");
+                input.style.opacity = "0";
+                input.style.position = "fixed";
+                input.value = "${text}";
+                document.body.appendChild(input);
+                input.focus();
+                input.setSelectionRange(0, input.value.length);
+                document.execCommand("Copy");
+                input.remove();
+            }
+        `);
     }
 
     isLastAsserionPassed(): boolean {
@@ -126,7 +140,7 @@ export class Utils {
      * 1. Implement actions for non Mac OS opearing systems
      */
     async copy(): Promise<void> {
-        if (this.testedBrowser === 'desktopSafari') {
+        if (this.testedBrowser === 'desktopSafari' || this.testedBrowser === 'remoteDesktopSafari') {
             await this.driver.actions()
                 .keyDown(Key.META)
                 .keyDown('c')
@@ -141,7 +155,7 @@ export class Utils {
     }
 
     async cut(): Promise<void> {
-        if (this.testedBrowser === 'desktopSafari') {
+        if (this.testedBrowser === 'desktopSafari' || this.testedBrowser === 'remoteDesktopSafari') {
             await this.driver.actions()
                 .keyDown(Key.META)
                 .keyDown('x')
@@ -156,7 +170,7 @@ export class Utils {
     }
 
     async paste(): Promise<void> {
-        if (this.testedBrowser === 'desktopSafari') {
+        if (this.testedBrowser === 'desktopSafari' || this.testedBrowser === 'remoteDesktopSafari') {
             await this.driver.actions()
                 .keyDown(Key.COMMAND)
                 .keyDown('v')
@@ -170,12 +184,42 @@ export class Utils {
         // await this.driver.sleep(200);
     }
 
+    async runner(testBody: () => void) {
+        try {
+            const title = await this.driver.getTitle();
+            await this.runAssertion(async () => {
+                try {
+                    expect(title).toContain('ReactGrid');
+                } catch (error) {
+                    throw Error(`Couldn't load ReactGrid page to continue testing!`);
+                }
+            });
+            await testBody();
+            if (this.testedBrowser === 'remoteDesktopSafari') {
+                await this.testPassed();
+            }
+        } catch (error) {
+            if (this.testedBrowser === 'remoteDesktopSafari') {
+                await this.testFailed();
+            }
+            throw error;
+        }
+    }
+
+    async testPassed(msg = '') {
+        await this.driver.executeScript(`browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "${msg}"}}`);
+    }
+
+    async testFailed(msg = '') {
+        await this.driver.executeScript(`browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "${msg}"}}`);
+    }
+
 }
 
- // function runBrowserStackLocal(arg: any) {
+// export function runBrowserStackLocal(options: Partial<browserstack.Options>): Promise<browserstack.Local> {
 //     const local = new browserstack.Local();
 //     return new Promise((resolve, reject) => {
-//         local.start(arg, function () {
+//         local.start(options, function () {
 //             if (local.isRunning()) {
 //                 resolve(local);
 //             }

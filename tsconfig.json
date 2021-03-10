@@ -23,7 +23,8 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "types": [
-      "cypress"
+      "cypress",
+      "jest"
     ],
     "noFallthroughCasesInSwitch": true
   },
