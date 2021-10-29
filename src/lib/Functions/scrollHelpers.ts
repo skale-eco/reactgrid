@@ -21,6 +21,12 @@ export function getScrollOfScrollableElement(element: ScrollableElement): { scro
     return { scrollLeft, scrollTop };
 }
 
+export const nodeToObserve = (element: ScrollableElement): Node => {
+    return (element === getTopScrollableElement() || element === document.body
+        ? document.body
+        : element) as Node;
+};
+
 export function getTopScrollableElement(): Window & typeof globalThis {
     return window;
 }
