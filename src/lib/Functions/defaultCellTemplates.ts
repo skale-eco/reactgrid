@@ -11,6 +11,7 @@ import {
   HeaderCellTemplateCustom,
   TextCellTemplateCustom,
   ButtonCellTemplate,
+  EmailCellTemplateCustom,
 } from "../CellTemplates";
 import { CellTemplates } from "../Model/PublicModel";
 
@@ -29,4 +30,5 @@ export const defaultCellTemplates: CellTemplates = {
   "header-custom": new HeaderCellTemplateCustom(),
   "text-custom": new TextCellTemplateCustom(),
   button: new ButtonCellTemplate(),
+  'email-custom': new EmailCellTemplateCustom(),
 };

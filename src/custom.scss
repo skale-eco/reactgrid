@@ -26,6 +26,11 @@
         }
       }
 
+      &.rg-email-custom-cell.invalid,
+      &.rg-text-custom-cell.invalid {
+        border: 1px solid $template-content-invalid !important;
+      }
+
       &.rg-header-custom-cell {
         font-weight: 600;
       }

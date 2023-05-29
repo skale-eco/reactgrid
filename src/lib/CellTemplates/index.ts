@@ -14,3 +14,4 @@ export * from "./getCharFromKeyCode";
 export * from "./HeaderCellTemplateCustom";
 export * from "./TextCellTemplateCustom";
 export * from "./ButtonCellTemplate";
+export * from "./EmailCellTemplateCustom";
