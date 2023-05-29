@@ -12,6 +12,7 @@ import {
   TextCellTemplateCustom,
   ButtonCellTemplate,
   EmailCellTemplateCustom,
+  DropdownCellTemplateCustom,
 } from "../CellTemplates";
 import { CellTemplates } from "../Model/PublicModel";
 
@@ -31,4 +32,5 @@ export const defaultCellTemplates: CellTemplates = {
   "text-custom": new TextCellTemplateCustom(),
   button: new ButtonCellTemplate(),
   'email-custom': new EmailCellTemplateCustom(),
+  'dropdown-custom': new DropdownCellTemplateCustom(),
 };

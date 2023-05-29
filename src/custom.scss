@@ -47,6 +47,46 @@
           background: transparent;
         }
       }
+      &.rg-dropdown-custom-cell {
+        .select-box {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          &__current {
+            padding: 0 8px;
+            max-width: calc(100% - 8px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            span {
+              margin-left: 2px;
+              margin-right: 2px;
+            }
+          }
+
+          &__icon {
+            display: flex;
+            span {
+              align-self: stretch;
+              background-color: hsl(0, 0%, 80%);
+              margin-bottom: 4px;
+              margin-top: 4px;
+              width: 1px;
+              box-sizing: border-box;
+            }
+            svg {
+              margin: 0 4px;
+              display: inline-block;
+              fill: hsl(0, 0%, 80%);
+              line-height: 1;
+              stroke: hsl(0, 0%, 80%);
+              stroke-width: 0;
+            }
+          }
+        }
+      }
     }
   }
 }
