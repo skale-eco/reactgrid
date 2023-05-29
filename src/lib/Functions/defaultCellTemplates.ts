@@ -10,6 +10,7 @@ import {
   DropdownCellTemplate,
   HeaderCellTemplateCustom,
   TextCellTemplateCustom,
+  ButtonCellTemplate,
 } from "../CellTemplates";
 import { CellTemplates } from "../Model/PublicModel";
 
@@ -27,4 +28,5 @@ export const defaultCellTemplates: CellTemplates = {
   //Custom
   "header-custom": new HeaderCellTemplateCustom(),
   "text-custom": new TextCellTemplateCustom(),
+  button: new ButtonCellTemplate(),
 };

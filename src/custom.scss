@@ -33,6 +33,15 @@
         color: #999;
         font-size: 0.8em;
       }
+      &.rg-button-cell {
+        padding: 0;
+        .button-box {
+          width: 100%;
+          height: 100%;
+          border: none;
+          background: transparent;
+        }
+      }
     }
   }
 }
