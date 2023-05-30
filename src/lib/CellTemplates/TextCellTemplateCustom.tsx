@@ -19,6 +19,7 @@ interface TextCell extends Cell {
   placeholder?: string;
   validator?: (text: string) => React.ReactNode;
   renderer?: (text: string) => React.ReactNode;
+  getValueFromEvent?: (value: string) => string;
 }
 
 export class TextCellTemplateCustom implements CellTemplate<TextCell> {
@@ -40,7 +41,9 @@ export class TextCellTemplateCustom implements CellTemplate<TextCell> {
   ): Compatible<TextCell> {
     return this.getCompatibleCell({
       ...cell,
-      text: cellToMerge.text,
+      text: cell.getValueFromEvent
+        ? cell.getValueFromEvent(cellToMerge.text)
+        : cellToMerge.text,
       placeholder: cellToMerge.placeholder,
     });
   }
