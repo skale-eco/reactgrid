@@ -13,6 +13,7 @@ import {
   ButtonCellTemplate,
   EmailCellTemplateCustom,
   DropdownCellTemplateCustom,
+  NumberCellTemplateCustom,
 } from "../CellTemplates";
 import { CellTemplates } from "../Model/PublicModel";
 
@@ -33,4 +34,5 @@ export const defaultCellTemplates: CellTemplates = {
   button: new ButtonCellTemplate(),
   'email-custom': new EmailCellTemplateCustom(),
   'dropdown-custom': new DropdownCellTemplateCustom(),
+  'number-custom': new NumberCellTemplateCustom(),
 };

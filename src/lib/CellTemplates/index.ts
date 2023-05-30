@@ -16,3 +16,4 @@ export * from "./TextCellTemplateCustom";
 export * from "./ButtonCellTemplate";
 export * from "./EmailCellTemplateCustom";
 export * from "./DropdownCellTemplateCustom";
+export * from "./NumberCellTemplateCustom";

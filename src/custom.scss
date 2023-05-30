@@ -87,6 +87,9 @@
           }
         }
       }
+      &.rg-number-custom-cell {
+        justify-content: flex-end;
+      }
     }
   }
 }
