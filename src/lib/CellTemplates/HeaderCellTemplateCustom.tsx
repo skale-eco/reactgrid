@@ -32,12 +32,12 @@ export class HeaderCellTemplateCustom implements CellTemplate<HeaderCell> {
     onCellChanged: (cell: Compatible<HeaderCell>, commit: boolean) => void
   ): React.ReactNode {
     return (
-      <>
+      <div style={{ whiteSpace: "normal" }}>
         <span>{cell.text}</span>
         {cell?.required && (
           <span style={{ color: "red", marginLeft: 4 }}>(*)</span>
         )}
-      </>
+      </div>
     );
   }
 
