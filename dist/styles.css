@@ -6,7 +6,8 @@
   margin: 0;
   background: transparent;
   font-size: 1em;
-  outline: none; }
+  outline: none;
+  border: none; }
 
 .rg-celleditor {
   box-sizing: border-box;
@@ -304,3 +305,67 @@
     opacity: 0;
     top: 50%;
     left: 50%; }
+
+.reactgrid.disabled .reactgrid-content {
+  background-color: #f2f2f2; }
+  .reactgrid.disabled .reactgrid-content .rg-pane.rg-pane-left .rg-cell, .reactgrid.disabled .reactgrid-content .rg-pane.rg-pane-right .rg-cell {
+    background-color: #f2f2f2; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell .show .fade {
+  opacity: 0;
+  transition: all 0.3s; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell .show:hover .fade {
+  opacity: 1; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell.rg-email-custom-cell.invalid, .reactgrid .reactgrid-content .rg-pane .rg-cell.rg-text-custom-cell.invalid {
+  border: 1px solid red !important; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell.rg-header-custom-cell {
+  font-weight: 600; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell.rg-text-custom-cell.placeholder {
+  color: #999;
+  font-size: 0.8em; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell.rg-button-cell {
+  padding: 0; }
+  .reactgrid .reactgrid-content .rg-pane .rg-cell.rg-button-cell .button-box {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell.rg-dropdown-custom-cell .select-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .reactgrid .reactgrid-content .rg-pane .rg-cell.rg-dropdown-custom-cell .select-box__current {
+    padding: 0 8px;
+    max-width: calc(100% - 8px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
+    .reactgrid .reactgrid-content .rg-pane .rg-cell.rg-dropdown-custom-cell .select-box__current span {
+      margin-left: 2px;
+      margin-right: 2px; }
+  .reactgrid .reactgrid-content .rg-pane .rg-cell.rg-dropdown-custom-cell .select-box__icon {
+    display: flex; }
+    .reactgrid .reactgrid-content .rg-pane .rg-cell.rg-dropdown-custom-cell .select-box__icon span {
+      align-self: stretch;
+      background-color: #cccccc;
+      margin-bottom: 4px;
+      margin-top: 4px;
+      width: 1px;
+      box-sizing: border-box; }
+    .reactgrid .reactgrid-content .rg-pane .rg-cell.rg-dropdown-custom-cell .select-box__icon svg {
+      margin: 0 4px;
+      display: inline-block;
+      fill: #cccccc;
+      line-height: 1;
+      stroke: #cccccc;
+      stroke-width: 0; }
+
+.reactgrid .reactgrid-content .rg-pane .rg-cell.rg-number-custom-cell {
+  justify-content: flex-end; }

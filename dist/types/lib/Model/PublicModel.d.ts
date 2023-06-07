@@ -67,6 +67,7 @@ export interface ReactGridProps {
      * given breakpoint value (by default `50`).
     */
     readonly verticalStickyBreakpoint?: number;
+    readonly disabledTable?: boolean;
     /**
      * Called when cell was changed (e.g. property `value`)
      *

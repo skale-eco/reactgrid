@@ -1,2 +1,2 @@
-import { CellTemplates } from '../Model/PublicModel';
+import { CellTemplates } from "../Model/PublicModel";
 export declare const defaultCellTemplates: CellTemplates;

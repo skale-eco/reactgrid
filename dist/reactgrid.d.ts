@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import * as React$1 from 'react';
+import React__default from 'react';
 
 interface CheckboxCell extends Cell {
     type: 'checkbox';
@@ -35,22 +36,22 @@ declare class DateCellTemplate implements CellTemplate<DateCell> {
     render(cell: Compatible<DateCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<DateCell>, commit: boolean) => void): React$1.ReactNode;
 }
 
-interface EmailCell extends Cell {
+interface EmailCell$1 extends Cell {
     type: 'email';
     text: string;
     validator?: (text: string) => boolean;
     renderer?: (text: string) => React$1.ReactNode;
     errorMessage?: string;
 }
-declare class EmailCellTemplate implements CellTemplate<EmailCell> {
-    getCompatibleCell(uncertainCell: Uncertain<EmailCell>): Compatible<EmailCell>;
-    handleKeyDown(cell: Compatible<EmailCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
-        cell: Compatible<EmailCell>;
+declare class EmailCellTemplate implements CellTemplate<EmailCell$1> {
+    getCompatibleCell(uncertainCell: Uncertain<EmailCell$1>): Compatible<EmailCell$1>;
+    handleKeyDown(cell: Compatible<EmailCell$1>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<EmailCell$1>;
         enableEditMode: boolean;
     };
-    update(cell: Compatible<EmailCell>, cellToMerge: UncertainCompatible<EmailCell>): Compatible<EmailCell>;
-    getClassName(cell: Compatible<EmailCell>, isInEditMode: boolean): string;
-    render(cell: Compatible<EmailCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<EmailCell>, commit: boolean) => void): React$1.ReactNode;
+    update(cell: Compatible<EmailCell$1>, cellToMerge: UncertainCompatible<EmailCell$1>): Compatible<EmailCell$1>;
+    getClassName(cell: Compatible<EmailCell$1>, isInEditMode: boolean): string;
+    render(cell: Compatible<EmailCell$1>, isInEditMode: boolean, onCellChanged: (cell: Compatible<EmailCell$1>, commit: boolean) => void): React$1.ReactNode;
 }
 
 interface ChevronCell extends Cell {
@@ -73,19 +74,19 @@ declare class ChevronCellTemplate implements CellTemplate<ChevronCell> {
     render(cell: Compatible<ChevronCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<ChevronCell>, commit: boolean) => void): React$1.ReactNode;
 }
 
-interface HeaderCell extends Cell, Span {
+interface HeaderCell$1 extends Cell, Span {
     type: 'header';
     text: string;
 }
-declare class HeaderCellTemplate implements CellTemplate<HeaderCell> {
-    getCompatibleCell(uncertainCell: Uncertain<HeaderCell>): Compatible<HeaderCell>;
-    render(cell: Compatible<HeaderCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<HeaderCell>, commit: boolean) => void): React$1.ReactNode;
-    isFocusable: (cell: Compatible<HeaderCell>) => boolean;
-    getClassName(cell: Compatible<HeaderCell>, isInEditMode: boolean): string;
-    getStyle: (cell: Compatible<HeaderCell>) => CellStyle;
+declare class HeaderCellTemplate implements CellTemplate<HeaderCell$1> {
+    getCompatibleCell(uncertainCell: Uncertain<HeaderCell$1>): Compatible<HeaderCell$1>;
+    render(cell: Compatible<HeaderCell$1>, isInEditMode: boolean, onCellChanged: (cell: Compatible<HeaderCell$1>, commit: boolean) => void): React$1.ReactNode;
+    isFocusable: (cell: Compatible<HeaderCell$1>) => boolean;
+    getClassName(cell: Compatible<HeaderCell$1>, isInEditMode: boolean): string;
+    getStyle: (cell: Compatible<HeaderCell$1>) => CellStyle;
 }
 
-interface NumberCell extends Cell {
+interface NumberCell$1 extends Cell {
     type: 'number';
     value: number;
     format?: Intl.NumberFormat;
@@ -94,19 +95,19 @@ interface NumberCell extends Cell {
     hideZero?: boolean;
     errorMessage?: string;
 }
-declare class NumberCellTemplate implements CellTemplate<NumberCell> {
-    getCompatibleCell(uncertainCell: Uncertain<NumberCell>): Compatible<NumberCell>;
-    handleKeyDown(cell: Compatible<NumberCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
-        cell: Compatible<NumberCell>;
+declare class NumberCellTemplate implements CellTemplate<NumberCell$1> {
+    getCompatibleCell(uncertainCell: Uncertain<NumberCell$1>): Compatible<NumberCell$1>;
+    handleKeyDown(cell: Compatible<NumberCell$1>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<NumberCell$1>;
         enableEditMode: boolean;
     };
-    update(cell: Compatible<NumberCell>, cellToMerge: UncertainCompatible<NumberCell>): Compatible<NumberCell>;
+    update(cell: Compatible<NumberCell$1>, cellToMerge: UncertainCompatible<NumberCell$1>): Compatible<NumberCell$1>;
     private getTextFromCharCode;
-    getClassName(cell: Compatible<NumberCell>, isInEditMode: boolean): string;
-    render(cell: Compatible<NumberCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<NumberCell>, commit: boolean) => void): React$1.ReactNode;
+    getClassName(cell: Compatible<NumberCell$1>, isInEditMode: boolean): string;
+    render(cell: Compatible<NumberCell$1>, isInEditMode: boolean, onCellChanged: (cell: Compatible<NumberCell$1>, commit: boolean) => void): React$1.ReactNode;
 }
 
-interface TextCell extends Cell {
+interface TextCell$1 extends Cell {
     type: 'text';
     text: string;
     placeholder?: string;
@@ -114,15 +115,15 @@ interface TextCell extends Cell {
     renderer?: (text: string) => React$1.ReactNode;
     errorMessage?: string;
 }
-declare class TextCellTemplate implements CellTemplate<TextCell> {
-    getCompatibleCell(uncertainCell: Uncertain<TextCell>): Compatible<TextCell>;
-    update(cell: Compatible<TextCell>, cellToMerge: UncertainCompatible<TextCell>): Compatible<TextCell>;
-    handleKeyDown(cell: Compatible<TextCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
-        cell: Compatible<TextCell>;
+declare class TextCellTemplate implements CellTemplate<TextCell$1> {
+    getCompatibleCell(uncertainCell: Uncertain<TextCell$1>): Compatible<TextCell$1>;
+    update(cell: Compatible<TextCell$1>, cellToMerge: UncertainCompatible<TextCell$1>): Compatible<TextCell$1>;
+    handleKeyDown(cell: Compatible<TextCell$1>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<TextCell$1>;
         enableEditMode: boolean;
     };
-    getClassName(cell: Compatible<TextCell>, isInEditMode: boolean): string;
-    render(cell: Compatible<TextCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<TextCell>, commit: boolean) => void): React$1.ReactNode;
+    getClassName(cell: Compatible<TextCell$1>, isInEditMode: boolean): string;
+    render(cell: Compatible<TextCell$1>, isInEditMode: boolean, onCellChanged: (cell: Compatible<TextCell$1>, commit: boolean) => void): React$1.ReactNode;
 }
 
 interface TimeCell extends Cell {
@@ -147,7 +148,7 @@ declare type OptionType = {
     label: string;
     value: string;
 };
-interface DropdownCell extends Cell {
+interface DropdownCell$1 extends Cell {
     type: 'dropdown';
     selectedValue?: string;
     values: OptionType[];
@@ -155,15 +156,15 @@ interface DropdownCell extends Cell {
     isOpen?: boolean;
     inputValue?: string;
 }
-declare class DropdownCellTemplate implements CellTemplate<DropdownCell> {
-    getCompatibleCell(uncertainCell: Uncertain<DropdownCell>): Compatible<DropdownCell>;
-    update(cell: Compatible<DropdownCell>, cellToMerge: UncertainCompatible<DropdownCell>): Compatible<DropdownCell>;
-    getClassName(cell: Compatible<DropdownCell>, isInEditMode: boolean): string;
-    handleKeyDown(cell: Compatible<DropdownCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
-        cell: Compatible<DropdownCell>;
+declare class DropdownCellTemplate implements CellTemplate<DropdownCell$1> {
+    getCompatibleCell(uncertainCell: Uncertain<DropdownCell$1>): Compatible<DropdownCell$1>;
+    update(cell: Compatible<DropdownCell$1>, cellToMerge: UncertainCompatible<DropdownCell$1>): Compatible<DropdownCell$1>;
+    getClassName(cell: Compatible<DropdownCell$1>, isInEditMode: boolean): string;
+    handleKeyDown(cell: Compatible<DropdownCell$1>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<DropdownCell$1>;
         enableEditMode: boolean;
     };
-    render(cell: Compatible<DropdownCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<DropdownCell>, commit: boolean) => void): React$1.ReactNode;
+    render(cell: Compatible<DropdownCell$1>, isInEditMode: boolean, onCellChanged: (cell: Compatible<DropdownCell$1>, commit: boolean) => void): React$1.ReactNode;
 }
 
 /**
@@ -213,6 +214,114 @@ declare const isAllowedOnNumberTypingKey: (keyCode: number) => boolean;
 declare const isNavigationKey: (keyCode: number) => boolean;
 
 declare const getCharFromKeyCode: (keyCode: number, isShiftKey?: boolean) => string;
+
+interface HeaderCell extends Cell, Span {
+    type: "header";
+    text: string;
+    required?: boolean;
+}
+declare class HeaderCellTemplateCustom implements CellTemplate<HeaderCell> {
+    getCompatibleCell(uncertainCell: Uncertain<HeaderCell>): Compatible<HeaderCell>;
+    render(cell: Compatible<HeaderCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<HeaderCell>, commit: boolean) => void): React$1.ReactNode;
+    isFocusable: (cell: Compatible<HeaderCell>) => boolean;
+    getClassName(cell: Compatible<HeaderCell>, isInEditMode: boolean): string;
+    getStyle: (cell: Compatible<HeaderCell>) => CellStyle;
+}
+
+interface TextCell extends Cell {
+    type: "text";
+    text: string;
+    placeholder?: string;
+    validator?: (text: string) => React$1.ReactNode;
+    renderer?: (text: string) => React$1.ReactNode;
+    getValueFromEvent?: (value: string) => string;
+}
+declare class TextCellTemplateCustom implements CellTemplate<TextCell> {
+    getCompatibleCell(uncertainCell: Uncertain<TextCell>): Compatible<TextCell>;
+    update(cell: Compatible<TextCell>, cellToMerge: UncertainCompatible<TextCell>): Compatible<TextCell>;
+    handleKeyDown(cell: Compatible<TextCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<TextCell>;
+        enableEditMode: boolean;
+    };
+    getClassName(cell: Compatible<TextCell>, isInEditMode: boolean): string;
+    render(cell: Compatible<TextCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<TextCell>, commit: boolean) => void): React$1.ReactNode;
+}
+
+interface ButtonCell extends Cell {
+    type: "button";
+    text: string;
+    renderer?: (text: string) => React$1.ReactNode;
+    callback?: (e: any) => void;
+}
+declare class ButtonCellTemplate implements CellTemplate<ButtonCell> {
+    getCompatibleCell(uncertainCell: Uncertain<ButtonCell>): Compatible<ButtonCell>;
+    getClassName(cell: Compatible<ButtonCell>): string;
+    handleKeyDown(cell: Compatible<ButtonCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<ButtonCell>;
+        enableEditMode: boolean;
+    };
+    render(cell: Compatible<ButtonCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<ButtonCell>, commit: boolean) => void): React$1.ReactNode;
+}
+
+interface EmailCell extends Cell {
+    type: "email";
+    text: string;
+    validator?: (text: string) => React$1.ReactNode;
+    renderer?: (text: string) => React$1.ReactNode;
+}
+declare class EmailCellTemplateCustom implements CellTemplate<EmailCell> {
+    getCompatibleCell(uncertainCell: Uncertain<EmailCell>): Compatible<EmailCell>;
+    handleKeyDown(cell: Compatible<EmailCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<EmailCell>;
+        enableEditMode: boolean;
+    };
+    update(cell: Compatible<EmailCell>, cellToMerge: UncertainCompatible<EmailCell>): Compatible<EmailCell>;
+    getClassName(cell: Compatible<EmailCell>, isInEditMode: boolean): string;
+    render(cell: Compatible<EmailCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<EmailCell>, commit: boolean) => void): React$1.ReactNode;
+}
+
+interface IOption {
+    value: string;
+    label: string;
+}
+interface DropdownCell extends Cell, Span {
+    type: "dropdown";
+    options: IOption[];
+    text: string;
+    renderer?: (text: string) => React__default.ReactNode;
+}
+declare class DropdownCellTemplateCustom implements CellTemplate<DropdownCell> {
+    getCompatibleCell(uncertainCell: Uncertain<DropdownCell>): Compatible<DropdownCell>;
+    update(cell: Compatible<DropdownCell>, cellToMerge: UncertainCompatible<DropdownCell>): Compatible<DropdownCell>;
+    getClassName(cell: Compatible<DropdownCell>, isInEditMode: boolean): string;
+    handleKeyDown(cell: Compatible<DropdownCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<DropdownCell>;
+        enableEditMode: boolean;
+    };
+    render(cell: Compatible<DropdownCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<DropdownCell>, commit: boolean) => void): React__default.ReactNode;
+}
+
+interface NumberCell extends Cell {
+    type: "number";
+    value: number;
+    format?: Intl.NumberFormat;
+    validator?: (text: number) => React$1.ReactNode;
+    renderer?: (text: string) => React$1.ReactNode;
+    nanToZero?: boolean;
+    hideZero?: boolean;
+    getValueFromEvent?: (value: number) => number;
+}
+declare class NumberCellTemplateCustom implements CellTemplate<NumberCell> {
+    getCompatibleCell(uncertainCell: Uncertain<NumberCell>): Compatible<NumberCell>;
+    handleKeyDown(cell: Compatible<NumberCell>, keyCode: number, ctrl: boolean, shift: boolean, alt: boolean): {
+        cell: Compatible<NumberCell>;
+        enableEditMode: boolean;
+    };
+    update(cell: Compatible<NumberCell>, cellToMerge: UncertainCompatible<NumberCell>): Compatible<NumberCell>;
+    private getTextFromCharCode;
+    getClassName(cell: Compatible<NumberCell>, isInEditMode: boolean): string;
+    render(cell: Compatible<NumberCell>, isInEditMode: boolean, onCellChanged: (cell: Compatible<NumberCell>, commit: boolean) => void): React$1.ReactNode;
+}
 
 /**
  * This is the public API for ReactGrid
@@ -282,6 +391,7 @@ interface ReactGridProps {
      * given breakpoint value (by default `50`).
     */
     readonly verticalStickyBreakpoint?: number;
+    readonly disabledTable?: boolean;
     /**
      * Called when cell was changed (e.g. property `value`)
      *
@@ -449,7 +559,7 @@ interface Highlight {
  *
  * @see https://reactgrid.com/docs/3.1/7-api/1-types/6-default-cells/
  */
-declare type DefaultCellTypes = CheckboxCell | DateCell | EmailCell | ChevronCell | HeaderCell | NumberCell | TextCell | TimeCell | DropdownCell;
+declare type DefaultCellTypes = CheckboxCell | DateCell | EmailCell$1 | ChevronCell | HeaderCell$1 | NumberCell$1 | TextCell$1 | TimeCell | DropdownCell$1;
 /**
  * `CellChange` type is used by `onCellsChanged`. It represents mutually exclusive changes on a single cell.
  *
@@ -1000,4 +1110,4 @@ declare enum keyCodes {
  */
 declare const getCellProperty: <TCell extends Cell, TKey extends keyof TCell>(uncertainCell: Uncertain<TCell>, propName: TKey, expectedType: 'string' | 'number' | 'boolean' | 'undefined' | 'function' | 'object' | 'symbol' | 'bigint') => NonNullable<Uncertain<TCell>[TKey]>;
 
-export { BorderProps, Cell, CellChange, CellLocation, CellStyle, CellTemplate, CellTemplates, CheckboxCell, CheckboxCellTemplate, ChevronCell, ChevronCellTemplate, Column, Compatible, DateCell, DateCellTemplate, DefaultCellTypes, DropPosition, DropdownCell, DropdownCellTemplate, EmailCell, EmailCellTemplate, HeaderCell, HeaderCellTemplate, Highlight, Id, MenuOption, NumberCell, NumberCellTemplate, OptionType, ReactGrid, ReactGridProps, Row, SelectionMode, Span, TextCell, TextCellTemplate, TextLabels, TimeCell, TimeCellTemplate, Uncertain, UncertainCompatible, getCellProperty, getCharFromKeyCode, inNumericKey, isAllowedOnNumberTypingKey, isAlphaNumericKey, isNavigationKey, isNumpadNumericKey, keyCodes };
+export { BorderProps, ButtonCellTemplate, Cell, CellChange, CellLocation, CellStyle, CellTemplate, CellTemplates, CheckboxCell, CheckboxCellTemplate, ChevronCell, ChevronCellTemplate, Column, Compatible, DateCell, DateCellTemplate, DefaultCellTypes, DropPosition, DropdownCell$1 as DropdownCell, DropdownCellTemplate, DropdownCellTemplateCustom, EmailCell$1 as EmailCell, EmailCellTemplate, EmailCellTemplateCustom, HeaderCell$1 as HeaderCell, HeaderCellTemplate, HeaderCellTemplateCustom, Highlight, Id, MenuOption, NumberCell$1 as NumberCell, NumberCellTemplate, NumberCellTemplateCustom, OptionType, ReactGrid, ReactGridProps, Row, SelectionMode, Span, TextCell$1 as TextCell, TextCellTemplate, TextCellTemplateCustom, TextLabels, TimeCell, TimeCellTemplate, Uncertain, UncertainCompatible, getCellProperty, getCharFromKeyCode, inNumericKey, isAllowedOnNumberTypingKey, isAlphaNumericKey, isNavigationKey, isNumpadNumericKey, keyCodes };
